@@ -50,18 +50,79 @@
 </head>
 
 <body class="bg-gray-900 text-gray-100 font-sans">
-    <header class="top-0 fixed w-full bg-gray-800 shadow-lg z-50">
-        <nav class="container mx-auto p-4 flex justify-between items-center">
-            <a href="#home" class="text-2xl font-bold gradient-text">MM</a>
-            <ul class="flex space-x-6">
-                <li><a href="#home" class="text-lg font-semibold hover:text-blue-400 transition-colors">Home</a></li>
-                <li><a href="#about" class="text-lg font-semibold hover:text-blue-400 transition-colors">About</a></li>
-                <li><a href="#skills" class="text-lg font-semibold hover:text-blue-400 transition-colors">Skills</a></li>
-                <li><a href="#projects" class="text-lg font-semibold hover:text-blue-400 transition-colors">Projects</a></li>
-                <li><a href="#contact" class="text-lg font-semibold hover:text-blue-400 transition-colors">Hire Me😊</a></li>
+    <header class="fixed top-0 w-full bg-gray-800 shadow-lg z-50">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#home" class="text-2xl font-bold gradient-text" aria-label="Home">MM</a>
+            
+            <!-- Hamburger Menu Button -->
+            <button id="menu-toggle" class="lg:hidden text-white focus:outline-none focus:ring-2 focus:ring-blue-400 p-2 rounded" aria-expanded="false" aria-controls="mobile-menu">
+                <span class="sr-only">Toggle menu</span>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            
+            <!-- Desktop Navigation Links -->
+            <ul id="desktop-menu" class="hidden lg:flex space-x-6">
+                <li><a href="#home" class="text-lg font-semibold text-white hover:text-blue-400 transition-colors">Home</a></li>
+                <li><a href="#about" class="text-lg font-semibold text-white hover:text-blue-400 transition-colors">About</a></li>
+                <li><a href="#skills" class="text-lg font-semibold text-white hover:text-blue-400 transition-colors">Skills</a></li>
+                <li><a href="#projects" class="text-lg font-semibold text-white hover:text-blue-400 transition-colors">Projects</a></li>
+                <li><a href="#contact" class="text-lg font-semibold text-white hover:text-blue-400 transition-colors">Hire Me<span aria-hidden="true">😊</span></a></li>
             </ul>
         </nav>
+        
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="lg:hidden fixed inset-0 bg-gray-800 bg-opacity-95 flex flex-col items-center justify-center space-y-6 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out">
+            <a href="#home" class="text-xl font-semibold text-white hover:text-blue-400 transition-colors">Home</a>
+            <a href="#about" class="text-xl font-semibold text-white hover:text-blue-400 transition-colors">About</a>
+            <a href="#skills" class="text-xl font-semibold text-white hover:text-blue-400 transition-colors">Skills</a>
+            <a href="#projects" class="text-xl font-semibold text-white hover:text-blue-400 transition-colors">Projects</a>
+            <a href="#contact" class="text-xl font-semibold text-white hover:text-blue-400 transition-colors">Hire Me<span aria-hidden="true">😊</span></a>
+        </div>
     </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            let isOpen = false;
+
+            function toggleMenu() {
+                isOpen = !isOpen;
+                menuToggle.setAttribute('aria-expanded', isOpen);
+                mobileMenu.style.opacity = isOpen ? '1' : '0';
+                mobileMenu.style.pointerEvents = isOpen ? 'auto' : 'none';
+                
+                // Prevent scrolling when menu is open
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+            }
+
+            menuToggle.addEventListener('click', toggleMenu);
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (isOpen && !mobileMenu.contains(event.target) && event.target !== menuToggle) {
+                    toggleMenu();
+                }
+            });
+
+            // Close menu when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && isOpen) {
+                    toggleMenu();
+                }
+            });
+
+            // Handle click events on mobile menu items
+            mobileMenu.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
 
     <main class="container mx-auto mt-24">
         <section id="home" class="h-screen flex items-center justify-center bg-gradient-to-b from-gray-800 via-gray-900 to-black relative">
