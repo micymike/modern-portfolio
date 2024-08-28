@@ -20,5 +20,5 @@ COPY . /app/
 # Expose the port on which the Flask app will run
 EXPOSE 5000
 
-# Define the command to run the Flask app
-CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
+# Define the command to run the Flask app with Gunicorn
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
